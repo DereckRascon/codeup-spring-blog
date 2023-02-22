@@ -1,6 +1,7 @@
 package com.codeup.codeupspringblog;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -8,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 public class HelloController {
 
     @GetMapping("/hello")
-    @ResponseBody
-    public String hello(){
-        return "Hello, World";
+    public String hello(Model model){
+        model.addAttribute("name", "World");
+        return "hello";
     }
 
     @GetMapping("/hello/{name}")
-    @ResponseBody
-    public String sayHello(@PathVariable String name) {
-        return "Hello, " + name + "!";
+    public String sayHello(@PathVariable String name, Model model) {
+        model.addAttribute("name", name);
+        return "hello";
     }
 
     @RequestMapping(path = "/increment/{number}", method = RequestMethod.GET)
@@ -26,8 +27,11 @@ public class HelloController {
     }
 
     @GetMapping("/exponent/{num}/{pow}")
-    @ResponseBody
-    public String exponent(@PathVariable int num, @PathVariable int pow){
-        return String.format("%d raised to the power %d gives the result of %d", num, pow, (int) (Math.pow(num, pow)));
+
+    public String exponent(@PathVariable int num, @PathVariable int pow, Model model){
+        model.addAttribute("num", num);
+        model.addAttribute("pow", pow);
+        model.addAttribute("result", (int) Math.pow(num, pow));
+        return "exponent";
     }
 }
