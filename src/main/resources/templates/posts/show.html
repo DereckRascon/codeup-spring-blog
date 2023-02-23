@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials :: head ('Welcome to Bloglandia!')">
+<head th:replace="partials :: head ('Viewing an Ad!')">
 </head>
 <body class="main-container main-bg">
 <nav th:replace="partials :: navbar"></nav>
+
 <main class="container">
-    <h1>Welcome to <span class="logo-font">Bloglandia</span></h1>
-    <h2>A Land of blogs, dreams, and magic.</h2>
+    <div>
+        <h1 th:text="${post.title}"></h1>
+        <p th:text="${post.body}"></p>
+    </div>
 </main>
 
 <div th:replace="partials :: boot-scripts"></div>

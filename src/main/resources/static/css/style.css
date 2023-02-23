@@ -1,0 +1,34 @@
+.main-bg {
+    background: #F7F3E3;
+    color: #2B2118
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-family: 'Gajraj One', sans-serif;
+}
+
+.nav-bg {
+    background: blue;
+    color: lawngreen;
+}
+
+.logo-font {
+    font-family: 'Grechen Fuemen' ,cursive;
+}
+
+.nav-bg a:link, .nav-bg a:visited {
+    color: #F7F3E3;
+}
+
+.nav-bg a:active, .nav-bg a:hover {
+    color: deeppink;
+}
+
+.footer-bg {
+    background: #0090C1;
+    color: #F7F3E3;
+}
