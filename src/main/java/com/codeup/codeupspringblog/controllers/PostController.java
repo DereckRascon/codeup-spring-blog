@@ -1,45 +1,47 @@
 package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Post;
+import com.codeup.codeupspringblog.repository.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 @Controller
 public class PostController {
 
+    private final PostRepository postDao;
+
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
 
     @GetMapping("/posts")
     public String postsHome(Model model){
-        ArrayList<Post> posts = new ArrayList<>();
-        posts.add(new Post(1,"Test Post 1","This is test post 1."));
-        posts.add(new Post(2,"Test Post 2","This is test post 2."));
-        posts.add(new Post(3,"Test Post 3", "This is test post 3."));
+        List<Post> posts = postDao.findAll();
         model.addAttribute("posts", posts);
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String postsHome(@PathVariable long id, Model model){
-        Post post = new Post(id, "Test Post 4", "This is test post 4.");
+        Post post = postDao.findPostById(id);
         model.addAttribute("post", post);
        return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
     public String postForm(){
-        return "View the form for creating a post";
+        return "posts/create";
     }
 
     @PostMapping("/post/create")
-    public void postCreate(){
-//        Something happens here to store a post for later
+    public String postCreate(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+        Post post = new Post(title, body);
+        postDao.save(post);
+        return "redirect:/posts";
     }
 
 
