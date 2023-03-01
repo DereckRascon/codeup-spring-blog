@@ -38,17 +38,24 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String postForm(){
+    public String postForm(Model model){
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
-    @PostMapping("/post/create")
-    public String postCreate(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+    @PostMapping("/posts/save")
+    public String postSave(@ModelAttribute Post post){
         User user = userDao.findUserById(1);
-        Post post = new Post(title, body, user);
         post.setUser(user);
         postDao.save(post);
         return "redirect:/posts";
+    }
+
+
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(Model model, @PathVariable long id){
+        model.addAttribute("post", postDao.findPostById(id));
+        return "posts/create";
     }
 
 
