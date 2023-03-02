@@ -19,21 +19,21 @@ public class DiceController {
         return "roll-dice";
     }
 
-    @PostMapping ("/roll-dice")
-    public String diceResults(@RequestParam(name="userInput") String userInput, Model model){
+    @GetMapping ("/roll-dice/{n}")
+    public String diceResults(@PathVariable int n, Model model){
         int randomNum = diceRoll();
         String message;
 
-        if(Integer.parseInt(userInput) == randomNum){
+        if(n == randomNum){
             message = "You are lucky!";
         }else{
             message = "Better luck next time!";
         }
-        model.addAttribute("userInput", userInput);
+        model.addAttribute("n", n);
         model.addAttribute("diceRoll", randomNum);
         model.addAttribute("message", message);
 
 
-        return "/roll-results";
+        return "roll-results";
     }
 }

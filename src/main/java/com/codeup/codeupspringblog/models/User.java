@@ -12,13 +12,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 55)
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -28,10 +28,17 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
+    public User( long id, String username) {
+        this.id = id;
         this.username = username;
-        this.email = email;
-        this.password = password;
+
     }
 
     public User(long id, String username, String email, String password, List<Post> posts) {
@@ -72,5 +79,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
